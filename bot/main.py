@@ -1,10 +1,16 @@
 import telebot
 
+from glob import glob
+
+import datetime
+
 import time
+
 
 bot = telebot.TeleBot('token')
 
 list=['hello', 'HELLO', 'Hello', 'good morning']
+
 
 @bot.message_handler(commands=['start'])
 def start(message):
@@ -14,22 +20,28 @@ def start(message):
 
 @bot.message_handler(commands=['destroy'])
 def destroy(message):
-    y = 0
-    for x in range(5, 8):
-        y = y + 2
-        b = x - y
-        bot.send_message(message.chat.id, "Destoy in %s" % b, parse_mode='html')
+    for x in range(3, 0, -1):
+        bot.send_message(message.chat.id, "Destoy in %s" % x, parse_mode='html')
         time.sleep(1)
 
-    bot.send_message(message.chat.id, 'BOOM')
+    bot.send_message(message.chat.id, f'<b>Dima</b> have became dictator of <b>KNDR</b> ', parse_mode='html')
 
     image = open('Boom.png', 'rb')
     bot.send_photo(message.chat.id, image)
 
 @bot.message_handler(commands=['help'])
 def help(message):
-    mass = 'you can use this command( /start, /help, /destroy)'
+    mass = 'you can use this command( /start, /help, /destroy, /photo)'
     bot.send_message(message.chat.id, mass, parse_mode='html')
+
+
+@ bot.message_handler(commands=['photo'])
+def photo(message):
+    files_found = glob("D:\щош\*Без*")
+
+    for picture in files_found:
+        photo = open(picture, 'rb')
+        bot.send_photo(message.chat.id, photo)
 
 
 @bot.message_handler()
